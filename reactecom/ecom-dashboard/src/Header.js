@@ -47,7 +47,7 @@ function Header() {
     </div>
     <div className="jumbotron col-sm-6 offset-sm-3"><br />
         <h1 className="display-4">Welcome {user.name} !</h1>
-        <p className="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+        <p className="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi non vulputate erat. Nunc interdum felis felis, nec hendrerit ipsum finibus id. Sed porta mi id eros mattis, eu vehicula risus mollis. Nulla facilisi.</p>
         <hr className="my-4" />
     </div>
     </>

@@ -18,7 +18,7 @@ function ProductList() {
     useEffect(() => {
       setTimeout(() => {
         fetchData();
-      }, 2000);
+      }, 3000);
     },[])
 
     async function deleteProduct(id) {
@@ -44,7 +44,7 @@ function ProductList() {
         <>
         <Header />
             <h1 className="display-4">Products List</h1><br />
-            {(data.length>0)?null:<h1>Loading...</h1>}
+            {(data.length>0)?null:<h1 className="display-4"><br />Loading Products...<br /><br /></h1>}
             <Table className="container" striped bordered hover>
                 {
                     (data.length>0?<thead>
@@ -78,7 +78,7 @@ function ProductList() {
                 }
                 </tbody>
             </Table>
-            
+
             <Footer />
             
         </>
