@@ -33,7 +33,7 @@ function UpdateProduct(props) {
             <input className="form-control" type="text" defaultValue={data.description} /><br />
             <label for="">Product Image</label>
             <input className="form-control" type="file" defaultValue={data.file_path} /><br />
-            <img style={{width:"150px"}} src={"http://127.0.0.1:8000/"+data.file_path} alt="" /><br /><br />
+            <img style={{width:"500px"}} src={"http://127.0.0.1:8000/"+data.file_path} alt="" /><br /><br />
             <button className="btn btn-primary">Update Product</button>
         </div><br />
         <Footer />

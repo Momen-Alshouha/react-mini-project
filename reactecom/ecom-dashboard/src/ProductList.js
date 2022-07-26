@@ -4,41 +4,102 @@ import React, {useState, useEffect} from "react";
 import { Table } from "react-bootstrap";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { useDispatch, useSelector } from "react-redux";
 
-function ProductList() {
-    let counter=0;
-    const [data,setData] =useState([]);
-
-    async function fetchData() {
+const fetchProducts = createAsyncThunk("products/fetchProducts",
+    async (_,thunkAPI) => {
         let result = await fetch("http://127.0.0.1:8000/api/list");
         result =await result.json();
-        setData(result);
+        return result;
     }
+
+) //middleware 
+
+
+const deleteProduct = createAsyncThunk("products/deleteProduct",
+    async (id,thunkAPI) => {
+        let result = await fetch("http://127.0.0.1:8000/api/delete/"+id,{
+                    method:'DELETE'
+                });
+        
+                result = await result.json();
+                
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'error',
+                    title: 'Product Deleted Successfully',
+                    showConfirmButton: false,
+                    timer: 2000
+                  })
+        return result;
+    }
+
+) //middleware 
+
+
+const ProductsSlice = createSlice({
+    name:'products',
+    initialState:{data:[]},
+    extraReducers:{
+        [fetchProducts.pending]:(state,action)=>{
+            
+        },
+        [fetchProducts.fulfilled]:(state,action)=>{
+            state.data = action.payload;
+        },
+        [fetchProducts.rejected]:(state,action)=>{
+
+        },
+        [deleteProduct.pending]:(state,action)=>{
+            
+        },
+        [deleteProduct.fulfilled]:(state,action)=>{
+            state.data = state.data.filter((product)=> (!action.payload))
+        },
+        [deleteProduct.rejected]:(state,action)=>{
+
+        },
+    }
+});
+
+
+
+export function ProductList() {
+    
+    let counter=0;
+    const dispatch = useDispatch();
+    const data = useSelector( (state) => state.products.data);
 
     useEffect(() => {
       setTimeout(() => {
-        fetchData();
+        dispatch(fetchProducts())
       }, 3000);
     },[])
 
-    async function deleteProduct(id) {
+    const deleteHandler = (id) => {
+        dispatch(deleteProduct(id));
         
-        let result = await fetch("http://127.0.0.1:8000/api/delete/"+id,{
-            method:'DELETE'
-        });
-
-        result = await result.json();
-        
-        Swal.fire({
-            position: 'top-end',
-            icon: 'error',
-            title: 'Product Deleted Successfully',
-            showConfirmButton: false,
-            timer: 2000
-          })
-          
-        fetchData();
     }
+
+    // async function deleteProduct(id) {
+        
+    //     let result = await fetch("http://127.0.0.1:8000/api/delete/"+id,{
+    //         method:'DELETE'
+    //     });
+
+    //     result = await result.json();
+        
+    //     Swal.fire({
+    //         position: 'top-end',
+    //         icon: 'error',
+    //         title: 'Product Deleted Successfully',
+    //         showConfirmButton: false,
+    //         timer: 2000
+    //       })
+          
+    //     fetchData();
+    // }
 
     return (
         <>
@@ -69,7 +130,7 @@ function ProductList() {
                                 <td>{product.price}</td>
                                 <td><img style={{width:"150px"}} src={"http://localhost:8000/"+product.file_path} alt="" /></td>
                                 <td>
-                                    <button onClick={()=>deleteProduct(product.id)} className="btn btn-danger">Delete</button>
+                                    <button onClick={() => deleteHandler(product.id)} className="btn btn-danger">Delete</button>
                                     <Link to={"update/"+product.id}><span className="btn btn-primary">update</span>   </Link>
                                 </td>
                            </tr>
@@ -86,4 +147,4 @@ function ProductList() {
 }
 
 
-export default ProductList
+export default ProductsSlice
