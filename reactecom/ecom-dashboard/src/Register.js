@@ -40,7 +40,7 @@ function Register() {
             <input onChange={(e)=>setPassword(e.target.value)} value={password} className="form-control" placeholder="password" type="password" /><br />
             <input onChange={(e)=>setEmail(e.target.value)} value={email} className="form-control" placeholder="email" type="email" /><br />
             <button onClick={SignUp} className="btn btn-primary">Sign Up</button>
-        </div>
+        </div><br />
         <Footer />
        </>
     )

@@ -3,7 +3,7 @@ import {NavLink} from 'react-router-dom'
 import { useNavigate } from 'react-router-dom';
 
 function Header() {
-
+    
     let user = JSON.parse(localStorage.getItem('user-info'));
     let naviage = useNavigate();
 
@@ -46,7 +46,7 @@ function Header() {
         </Navbar> 
     </div>
     <div className="jumbotron col-sm-6 offset-sm-3"><br />
-        <h1 className="display-4">Welcome {user.name} !</h1>
+        <h1 className="display-4">Welcome {(user && user.name)?user.name:"Guest"}  !</h1>
         <p className="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi non vulputate erat. Nunc interdum felis felis, nec hendrerit ipsum finibus id. Sed porta mi id eros mattis, eu vehicula risus mollis. Nulla facilisi.</p>
         <hr className="my-4" />
     </div>

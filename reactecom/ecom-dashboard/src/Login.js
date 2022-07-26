@@ -27,7 +27,6 @@ function Login() {
             body:JSON.stringify(item)
         })
         result = await result.json();
-        console.log(result)
         localStorage.setItem("user-info",JSON.stringify(result));
         navigate('/add');
     }
@@ -40,7 +39,7 @@ function Login() {
             <input className='form-control' onChange={(e) => setEmail(e.target.value)} type="text" placeholder='email' /><br />
             <input className='form-control' onChange={(e) =>setPassword(e.target.value)} type="password" placeholder='password'  /><br />
             <button onClick={login} className='btn btn-primary'>Login</button>
-        </div>
+        </div><br />
         <Footer />
         </>
     )
